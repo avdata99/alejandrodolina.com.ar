@@ -12,6 +12,7 @@
         <script src="js/skel-layers.min.js"></script>
         <script src="js/init.js"></script>
         <script src="js/sheetrock.min.js"></script>
+        <script src="js/handlebars.min.js"></script>
         <noscript>
         <link rel="stylesheet" href="css/skel.css" />
         <link rel="stylesheet" href="css/style.css" />
@@ -56,8 +57,21 @@
                     <!-- Content -->
                     <div class="6u">
                         <section>
-                            <ul class="style">
-                                
+                            <ul class="style" id='hr'>
+                                <li>
+                                    <span class="fa fa-trophy"></span>
+                                    <h3>Próximas hazañas</h3>
+                                </li>
+                                <script id="hr-template" type="text/x-handlebars-template">
+                                    <li> <h3>{{cells.Titulo}}</h3>
+                                      <span>{{cells.Detalle}}  
+                                      {{#if cells.Link}} 
+                                      (<a target='_blank' href="{{cells.Link}}">+ info</a>) 
+                                      {{/if}}
+                                      </span>
+
+                                    </li>
+                                  </script>
                             </ul>
                             <table id="tablaeventos" class="eventos"></table>
                         </section>
@@ -134,14 +148,15 @@
         </div>
 
 <script>
-
+    var HRTemplate = Handlebars.compile($('#hr-template').html());
     // robado de http://chriszarate.github.io/sheetrock/
     var mySpreadsheet='https://docs.google.com/a/data99.com.ar/spreadsheets/d/1ZddwatftzOoOZBm4-330FH3pOnXLSL6wRiAYZPHRNsE/edit#gid=0'
     // Load top ten switch hitters.
-    $('#tablaeventos').sheetrock({
+    $('#hr').sheetrock({
       url: mySpreadsheet,
       // query: "select A,B,C,D,E,L where E = 'Both' order by L desc",
-      fetchSize: 10
+      fetchSize: 10,
+      rowTemplate: HRTemplate
     });
 
 
