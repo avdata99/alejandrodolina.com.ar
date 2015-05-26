@@ -1,6 +1,7 @@
 #files
 echo "Rsync files"
 rsync -av --progress --exclude='.git' --rsh='ssh -p 987' \
+	--exclude='ORIG' --exclude='ORIG2' \
 	. dolina@alejandrodolina.com.ar:/home/dolina/www/
  
 #permissions
